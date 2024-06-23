@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'section_card_logic.dart';
 import 'package:get/get.dart';
+
+import 'section_card_logic.dart';
 
 // ignore: must_be_immutable
 class SectionCard extends StatelessWidget {
@@ -29,7 +30,7 @@ class SectionCard extends StatelessWidget {
             //     borderRadius: BorderRadius.all(Radius.circular(30))),
             child: InkWell(
                 onLongPress: () => logic.onCardLongTap(context),
-                onTap: ()=>logic.onPracticeTap(),
+                onTap: () => logic.onPracticeTap(),
                 child: Column(
                   children: [
                     sectionInfo(),
@@ -42,6 +43,7 @@ class SectionCard extends StatelessWidget {
 
   Row sectionBar() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         const SizedBox(
           width: 20,
@@ -51,7 +53,7 @@ class SectionCard extends StatelessWidget {
           child: ElevatedButton(
             style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all(const Color(0xFF506F38))),
+                    WidgetStateProperty.all(const Color(0xFF506F38))),
             onPressed: () => logic.onPracticeTap(),
             child: const Text(
               '开始练习',
@@ -59,27 +61,25 @@ class SectionCard extends StatelessWidget {
             ),
           ),
         ),
-        const Expanded(child: SizedBox()),
       ],
     );
   }
 
-  Row sectionInfo() {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-          child: Text(
-            logic.name,
-            style: const TextStyle(fontSize: 25, color: Colors.white),
+  Widget sectionInfo() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              logic.name,
+              style: const TextStyle(fontSize: 25, color: Colors.white),
+            ),
           ),
-        ),
-        Expanded(child: Container()),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-          child: sectionProgress(),
-        )
-      ],
+          sectionProgress()
+        ],
+      ),
     );
   }
 

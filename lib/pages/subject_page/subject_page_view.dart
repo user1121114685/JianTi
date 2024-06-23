@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../data_class/data_manager.dart';
 import '../../config/theme.dart';
+import '../../data_class/data_manager.dart';
 import 'subject_card/subject_card_view.dart';
 import 'subject_page_logic.dart';
-import 'package:get/get.dart';
 
 class SubjectPageView extends StatefulWidget {
   const SubjectPageView({super.key});
@@ -20,13 +20,13 @@ class _SubjectPageViewState extends State<SubjectPageView> {
   void initState() {
     logic = Get.put(SubjectPageLogic());
     super.initState();
+
     ///初始化题库
     _initData();
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: GetBuilder<SubjectPageLogic>(builder: (logic) => _buildBody()),
       // floatingActionButton: FloatingActionButton(
@@ -42,10 +42,13 @@ class _SubjectPageViewState extends State<SubjectPageView> {
     silvers.add(SliverAppBar.large(
       leading: IconButton(
         icon: const Icon(Icons.menu),
-        onPressed: ()=>logic.onAboutTap(),
+        onPressed: () => logic.onAboutTap(),
       ),
       title: const Text('简题'),
-      actions: [IconButton(onPressed: ()=>logic.onImportTap(), icon: const Icon(Icons.add))],
+      actions: [
+        IconButton(
+            onPressed: () => logic.onImportTap(), icon: const Icon(Icons.add))
+      ],
     ));
 
     for (int index = 0; index < DataManager.subjects.length; index++) {
@@ -64,7 +67,7 @@ class _SubjectPageViewState extends State<SubjectPageView> {
     );
   }
 
-    void _initData() async {
+  void _initData() async {
     await DataManager.loadData();
     setState(() {});
   }

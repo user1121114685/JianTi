@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: '简题',
+      // title: '简题',
       theme: ThemeData(primarySwatch: Colors.brown, useMaterial3: true)
           .useSystemChineseFont(Brightness.light),
       home: GetBuilder<MainLogic>(builder: (logic) => _buildHome()),

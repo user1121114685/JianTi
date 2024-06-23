@@ -55,13 +55,13 @@ class _PracticePageViewState extends State<PracticePageView> {
           onHorizontalDragEnd: (DragEndDetails details) {
             double currentX = details.globalPosition.dx;
             double distance = currentX - startX;
-            // 当滑动距离超过100逻辑像素时，确认为有效滑动
-            if (distance.abs() > 100) {
+            // 当滑动距离超过50逻辑像素时，确认为有效滑动
+            if (distance.abs() > 50) {
               if (distance > 0) {
-                // 用户向右滑动超过100逻辑像素
+                // 用户向右滑动超过50逻辑像素
                 logic.backPre();
               } else {
-                // 用户向左滑动超过100逻辑像素
+                // 用户向左滑动超过50逻辑像素
                 logic.changeToNext();
               }
             }
@@ -70,7 +70,12 @@ class _PracticePageViewState extends State<PracticePageView> {
             autofocus: true,
             onKeyEvent: _handleKeyEvent,
             child: Scaffold(
-              appBar: AppBar(),
+              appBar: AppBar(
+                title: Text(
+                  logic.subject.name,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               body: _buildBody(logic),
               backgroundColor: MTheme.baseColor,
               bottomNavigationBar: _buildBottomNavigationBar(),
@@ -105,9 +110,15 @@ class _PracticePageViewState extends State<PracticePageView> {
       return SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             _buildInfoBar(),
+            // 题目
             _buildProblemTitle(),
+            // 错误提示
             _buildShowASWWidget(logic),
+            // 选项
             _buldOptionsView()
           ],
         ),
@@ -132,7 +143,7 @@ class _PracticePageViewState extends State<PracticePageView> {
                 style: const TextStyle(color: Colors.white)),
             Text('正确答案是：${logic.problem?.key ?? 'Null'},已经为您加入错题本！',
                 style: const TextStyle(color: Colors.white)),
-            Text('参考解析是：${logic.problem?.hint ?? '没有提示！'}',
+            Text('参考解析是：${logic.problem?.hint ?? '暂无提示！'}',
                 style: const TextStyle(color: Colors.white))
           ]),
         ),
@@ -185,14 +196,16 @@ class _PracticePageViewState extends State<PracticePageView> {
   }
 
   Widget _buildInfoBar() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal, // 设置滚动方向为水平
-      child: Row(
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Wrap(
         children: [
-          buildChip(logic.subject.name),
+          const SizedBox(
+            width: 20,
+          ),
           buildChip(logic.section.name ?? 'Null'),
           buildChip(
-              '${logic.section.progress}/${logic.section.problems?.length}'),
+              '${logic.section.progress} / ${logic.section.problems?.length}'),
           buildChip(logic.problem?.type ?? 'Null')
         ],
       ),

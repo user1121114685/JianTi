@@ -19,7 +19,7 @@ class Problem {
     required this.type,
     required this.options,
     this.neededDoneTime = 0,
-    this.hint = '', // 默认值为空字符串
+    this.hint = '本题暂未设置提示', // 默认值
   });
 
   static String standarlizeTitle(Map<String, dynamic> data) {

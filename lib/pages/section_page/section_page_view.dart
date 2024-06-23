@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../config/theme.dart';
-import 'section_card/section_card_view.dart';
 import '../practice_page/practice_page_view.dart';
+import 'section_card/section_card_view.dart';
 import 'section_page_logic.dart';
 
 // ignore: must_be_immutable
@@ -16,6 +17,12 @@ class SectionPageView extends StatelessWidget {
     logic = Get.put(SectionPageLogic(subjectIndex));
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          logic.subjectName,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
       body: GetBuilder<SectionPageLogic>(builder: (logic) => _buildBody()),
       floatingActionButton: FloatingActionButton(
         backgroundColor: MTheme.highLightColor,
@@ -31,10 +38,6 @@ class SectionPageView extends StatelessWidget {
 
   Widget _buildBody() {
     List<Widget> silvers = [];
-    silvers.add(SliverAppBar.large(
-      title: Text(logic.subjectName),
-    ));
-
     for (int index = 0; index < logic.subject.sections.length; index++) {
       silvers.add(SliverToBoxAdapter(
         child: SectionCard(
@@ -46,8 +49,17 @@ class SectionPageView extends StatelessWidget {
 
     return Container(
       color: MTheme.baseColor,
-      child: CustomScrollView(
-        slivers: silvers,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: CustomScrollView(
+              slivers: silvers,
+            ),
+          ),
+        ],
       ),
     );
   }
